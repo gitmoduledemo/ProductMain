@@ -1,0 +1,22 @@
+name: Sync Public Product Repos
+
+on:
+  workflow_dispatch:  # Allow manual trigger
+  schedule:
+    - cron: '0 3 * * *'  # Runs daily at 3 AM UTC
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout ProductMain
+        uses: actions/checkout@v3
+
+      - name: Install Git
+        run: sudo apt-get install git -y
+
+      - name: Run sync script
+        run: |
+          chmod +x build-docs.sh
+          ./build-docs.sh
