@@ -16,6 +16,6 @@ cd ..
 git config --global user.email "amandeep.talwar@gmail.com"
 git config --global user.name "Aman Talwar"
 
-git add site/
+git add source/
 git commit -m "Add updated product docs"
 git push origin main
