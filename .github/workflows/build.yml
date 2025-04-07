@@ -1,0 +1,33 @@
+name: Build All Docs
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout master repo
+      uses: actions/checkout@v3
+
+    - name: Set up Python (if using MkDocs)
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        pip install mkdocs
+
+    - name: Run build script
+      run: |
+        chmod +x build-docs.sh
+        ./build-docs.sh
+
+    - name: Deploy (optional)
+      run: |
+        # Deploy step if you host the site (Netlify, GH Pages, etc.)
+        echo "Deploy step here"
