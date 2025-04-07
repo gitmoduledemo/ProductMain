@@ -1,21 +1,31 @@
 #!/bin/bash
+
 set -e
 
-# Create a directory to hold all product content
+echo "🚀 Starting sync..."
+
+# Clean old folders
+rm -rf products productA productB productC
 mkdir -p products
-cd products
 
-# Clone all repos
-git clone https://github.com/gitmoduledemo/productA.git
-git clone https://github.com/gitmoduledemo/ProductB.git
-git clone https://github.com/gitmoduledemo/ProductC.git
-# ... Add remaining products here
+# List of public product repos
+REPOS=("productA" "productB" "productC")
 
-cd ..
-# Stage built content
-git config --global user.email "amandeep.talwar@gmail.com"
-git config --global user.name "Aman Talwar"
+# Clone and copy from each repo
+for repo in "${REPOS[@]}"; do
+  echo "📦 Cloning $repo..."
+  git clone https://github.com/gitmoduledemo/$repo.git products/$repo
 
-git add source/
-git commit -m "Add updated product docs"
+  echo "📂 Copying files from $repo into $repo/ folder..."
+  mkdir -p $repo
+  cp -r products/$repo/* $repo/
+done
+
+# Configure Git and commit the changes
+echo "✅ Committing updates..."
+git config --global user.email "you@example.com"
+git config --global user.name "GitHub Actions Bot"
+
+git add -f productA productB productC
+git commit -m "📦 Synced latest content from public product repos" || echo "⚠️ Nothing to commit"
 git push origin main
