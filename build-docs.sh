@@ -12,4 +12,10 @@ git clone https://github.com/gitmoduledemo/ProductC.git
 # ... Add remaining products here
 
 cd ..
+# Stage built content
+git config --global user.email "amandeep.talwar@gmail.com"
+git config --global user.name "Aman Talwar"
 
+git add site/
+git commit -m "Add updated product docs"
+git push origin main
